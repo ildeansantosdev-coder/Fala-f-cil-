@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fala Fácil</title>
+
+<style>
+
+/* 🌄 FUNDO BONITO */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+  background: url("https://images.unsplash.com/photo-1518770660439-4636190af475") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* escurecer fundo */
+.overlay {
+  background: rgba(0,0,0,0.75);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* 📦 CONTAINER */
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding-top: 40px;
+}
+
+/* 🔥 TÍTULO */
+h1 {
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.slogan {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 40px;
+}
+
+/* 🎯 BOTÕES ESTILOSOS */
+button {
+  width: 100%;
+  padding: 18px;
+  margin: 12px 0;
+  font-size: 18px;
+  border: none;
+  border-radius: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* azul */
+#btn1 {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* verde */
+#btn2 {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+/* hover efeito */
+button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* 📄 RESULTADO */
+#resultado {
+  margin-top: 25px;
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  min-height: 60px;
+  text-align: left;
+  backdrop-filter: blur(8px);
+}
+
+/* 🔐 RODAPÉ (proteção visual) */
+footer {
+  margin-top: 40px;
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<div class="container">
+
+<h1>📱 Fala Fácil</h1>
+
+<p class="slogan">
+"Ouça quando não sabe ler. Leia quando não pode ouvir."
+</p>
+
+<button id="btn1" onclick="ouvirTexto()">🔊 OUVIR MENSAGEM</button>
+
+<button id="btn2" onclick="lerTexto()">📝 LER MENSAGEM</button>
+
+<div id="resultado">Pronto para uso...</div>
+
+<footer>
+© 2026 Fala Fácil™ | Todos os direitos reservados
+</footer>
+
+</div>
+
+</div>
+
+<script>
+let sharedText = "";
+
+// 🔊 fala
+function falar(texto) {
+  const fala = new SpeechSynthesisUtterance(texto);
+  fala.lang = "pt-BR";
+  speechSynthesis.speak(fala);
+}
+
+// 🔊 OUVIR TEXTO
+function ouvirTexto() {
+  let texto = sharedText || prompt("Cole a mensagem do WhatsApp:");
+
+  if (texto) {
+    falar(texto);
+
+    document.getElementById("resultado").innerHTML =
+      "🔊 Lendo mensagem:<br><br>" + texto;
+  }
+}
+
+// 📝 LER TEXTO
+function lerTexto() {
+  let texto = sharedText || prompt("Cole a mensagem:");
+
+  if (texto) {
+    document.getElementById("resultado").innerHTML =
+      "📝 Mensagem:<br><br>" + texto;
+  }
+}
+
+/* 📲 RECEBER TEXTO DO WHATSAPP (via URL) */
+window.onload = function () {
+  const params = new URLSearchParams(window.location.search);
+
+  // texto compartilhado
+  if (params.has("text")) {
+    sharedText = decodeURIComponent(params.get("text"));
+
+    document.getElementById("resultado").innerHTML =
+      "📲 Mensagem recebida do WhatsApp:<br><br>" + sharedText;
+  }
+};
+
+</script>
+
+</body>
+</html>
